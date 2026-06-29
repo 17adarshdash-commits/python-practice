@@ -3,11 +3,16 @@ from groq import Groq
 
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-response = client.chat.completions.create(
+while True:
+    user_input = input("You: ")
+    
+    if user_input == "quit":
+        break
+    
+    response = client.chat.completions.create(
     model="llama-3.1-8b-instant",
     messages=[
-        {"role": "user", "content": "Say hello in one sentence"}
+        {"role": "user", "content": user_input}
     ]
-)
-
-print(response.choices[0].message.content)
+    )
+    print(response.choices[0].message.content)
